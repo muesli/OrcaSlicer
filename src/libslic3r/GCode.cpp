@@ -3676,7 +3676,7 @@ LayerResult GCode::process_layer(
     m_last_height = height;
 
     // Set new layer - this will change Z and force a retraction if retract_when_changing_layer is enabled.
-    if (! m_config.before_layer_change_gcode.value.empty()) {
+    if (!first_layer && ! m_config.before_layer_change_gcode.value.empty()) {
         DynamicConfig config;
         config.set_key_value("layer_num",   new ConfigOptionInt(m_layer_index + 1));
         config.set_key_value("layer_z",     new ConfigOptionFloat(print_z));
@@ -3737,7 +3737,7 @@ LayerResult GCode::process_layer(
                      "\n";
         }
     }
-    if (! m_config.layer_change_gcode.value.empty()) {
+    if (!first_layer && ! m_config.layer_change_gcode.value.empty()) {
         DynamicConfig config;
         config.set_key_value("layer_num", new ConfigOptionInt(m_layer_index));
         config.set_key_value("layer_z",   new ConfigOptionFloat(print_z));
